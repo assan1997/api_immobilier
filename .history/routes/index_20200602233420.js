@@ -15,7 +15,7 @@ router.get('/users', async (req, res) => {
 });
 
 router.post('/addItem', upload, async (req, res) => {
-  const urls = [];
+  let images = [];
   if (req.files.length !== 0) {
     const uploader = async (path) => await cloudinary.uploads(path, 'Images');
     req.files.forEach(async (file) => {
@@ -26,9 +26,12 @@ router.post('/addItem', upload, async (req, res) => {
       fs.unlinkSync(path);
     });
   }
-  const item = { ...req.body, images: urls };
+  const item = { ...req.body, images: images };
   let output = await controller.addNewItem(item);
-  res.json(output);
+  res.json({
+    message: 'images uploaded successfully',
+    data: output,
+  });
 });
 router.get('/allItems', async (req, res) => {
   let output = await controller.getAllItems();
