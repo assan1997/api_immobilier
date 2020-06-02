@@ -3,7 +3,7 @@ var router = express.Router();
 controller = require('../controller/controller');
 
 const upload = require('../multer');
-const cloudinary = require('../cloudinary');
+const upload = require('../cloudinary');
 const fs = require('fs');
 
 router.get('/users', async (req, res) => {
