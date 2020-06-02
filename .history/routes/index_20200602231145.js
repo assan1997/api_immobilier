@@ -34,7 +34,7 @@ router.post('/addItem', upload, async (req, res) => {
   let output = await controller.addNewItem(item);
   res.json({
     message: 'images uploaded successfully',
-    data: output,
+    data: urls,
   });
 });
 router.get('/allItems', async (req, res) => {
