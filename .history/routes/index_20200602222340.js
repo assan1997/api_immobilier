@@ -19,7 +19,7 @@ router.post('/addItem', upload, async (req, res) => {
   if (req.files.length !== 0) {
     const uploader = async (path) => await cloudinary.uploads(path, 'Images');
 
-    req.files.forEach(async (file) => {
+    req.files.forEach(async (element) => {
       // images.push(element.filename);
 
       const { path } = file;
