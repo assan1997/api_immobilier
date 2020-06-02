@@ -5,7 +5,6 @@ controller = require('../controller/controller');
 const upload = require('../multer');
 const cloudinary = require('../cloudinary');
 const fs = require('fs');
-
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Lauvin immobilier API 3' });
 });
