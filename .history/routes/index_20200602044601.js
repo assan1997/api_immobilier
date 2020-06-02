@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-controller = require('../controller/controller');
+controller = require('../controller/Controller');
 const path = require('path');
 const multer = require('multer');
 /* GET home page. */
