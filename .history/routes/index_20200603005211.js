@@ -32,7 +32,7 @@ router.post('/addItem', upload, async (req, res) => {
     };
   }
   let imagePath = await linking();
-  const item = { ...req.body, images: imagePath };
+  const item = { ...req.body, images: images };
   await controller.addNewItem(item);
 });
 router.get('/allItems', async (req, res) => {
