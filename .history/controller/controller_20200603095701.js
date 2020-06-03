@@ -101,7 +101,13 @@ class Controller {
     return new Promise((resolve, reject) => {
       User.findOne({ username: item.author }).then((user) => {
         const newItem = new Item({ ...item, user: user });
-        newItem.save().then((item) => resolve(item));
+        newItem.save().then(() => {
+          Item.find({ author: user })
+            .populate('user')
+            .then((element) => {
+              resolve(element);
+            });
+        });
       });
     });
   }

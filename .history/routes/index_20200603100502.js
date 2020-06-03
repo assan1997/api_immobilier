@@ -45,6 +45,7 @@ router.post('/addItem', upload, async (req, res) => {
     });
   }
   let images = await uploadImage();
+  const item = ;
   let output = await controller.addNewItem({ ...req.body, images: images });
   res.json(output);
 });
