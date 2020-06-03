@@ -35,10 +35,10 @@ router.post('/addItem', upload, async (req, res) => {
         use_filename: true,
       });
       images.push(newPath.url);
-
-      const item = { ...req.body, images: images };
-      let output = await controller.addNewItem(item);
-
+      if (images.length - 1 === index) {
+        const item = { ...req.body, images: images };
+        let output = await controller.addNewItem(item);
+      }
       fs.unlinkSync(path);
     }
   } else {
