@@ -27,7 +27,7 @@ router.post('/addItem', upload, async (req, res) => {
       // fs.unlinkSync(path);
       if(req.files.length-1 ===index ){
         const item ={ ...req.body, images: images };
-        let output = await controller.addNewItem(item);
+    let output = await controller.addNewItem(item);
       }
        
     });
