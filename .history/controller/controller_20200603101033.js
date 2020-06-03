@@ -100,8 +100,16 @@ class Controller {
   static addNewItem(item) {
     return new Promise((resolve, reject) => {
       User.findOne({ username: item.author }).then((user) => {
-        const newItem = new Item({ ...item, user: user });
-        newItem.save().then((item) => resolve);
+        const extract = extractItem({ data: item, exclude: 'author' });
+        extract.user = user;
+        const newItem = new Item(extract);
+        newItem.save().then(() => {
+          Item.find({ author: user })
+            .populate('user')
+            .then((element) => {
+              resolve(element);
+            });
+        });
       });
     });
   }
