@@ -104,7 +104,8 @@ class Controller {
         extract.user = user;
         console.log(extract);
         const newItem = new Item(extract);
-        newItem.save().then(() => {});
+        newItem.save().then(() => {
+        
       });
     });
   }
