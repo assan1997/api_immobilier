@@ -39,7 +39,7 @@ router.post('/addItem', upload, async (req, res) => {
       fs.unlinkSync(path);
     }
   }
-  const item = { ...req.body, images: images };
+  const item = await { ...req.body, images: images };
   let output = await controller.addNewItem(item);
 });
 router.get('/allItems', async (req, res) => {
