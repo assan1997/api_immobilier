@@ -30,11 +30,11 @@ router.post('/addItem', upload, async (req, res) => {
   if (req.files.length !== 0) {
     req.files.forEach(async (file) => {
       const { path } = file;
-      const newPath = await cloudinary.v2.uploader.upload(path, {
+      const newPath = await cloudinary.uploads(path, {
         folder: 'Images',
         use_filename: true,
       });
-      images.push(newPath);
+
       fs.unlinkSync(path);
     });
   }

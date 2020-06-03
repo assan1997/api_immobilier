@@ -4,7 +4,7 @@ controller = require('../controller/controller');
 
 const upload = require('../multer');
 
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -30,11 +30,8 @@ router.post('/addItem', upload, async (req, res) => {
   if (req.files.length !== 0) {
     req.files.forEach(async (file) => {
       const { path } = file;
-      const newPath = await cloudinary.v2.uploader.upload(path, {
-        folder: 'Images',
-        use_filename: true,
-      });
-      images.push(newPath);
+      const newPath = await cloudinary.uploads(path, 'Images');
+      images.push(newPath.url);
       fs.unlinkSync(path);
     });
   }

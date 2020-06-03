@@ -3,18 +3,7 @@ var router = express.Router();
 controller = require('../controller/controller');
 
 const upload = require('../multer');
-
-const cloudinary = require('cloudinary').v2;
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
+const cloudinary = require('../cloudinary');
 const fs = require('fs');
 
 router.get('/', function (req, res, next) {
@@ -30,11 +19,8 @@ router.post('/addItem', upload, async (req, res) => {
   if (req.files.length !== 0) {
     req.files.forEach(async (file) => {
       const { path } = file;
-      const newPath = await cloudinary.v2.uploader.upload(path, {
-        folder: 'Images',
-        use_filename: true,
-      });
-      images.push(newPath);
+      const newPath = await cloudinary.uploads(path, 'Images');
+      images.push(newPath.url);
       fs.unlinkSync(path);
     });
   }
