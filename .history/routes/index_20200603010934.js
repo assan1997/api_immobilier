@@ -27,6 +27,7 @@ router.post('/addItem', upload, async (req, res) => {
       fs.unlinkSync(path);
     }
   }
+
   const item = { ...req.body, images: images };
   await controller.addNewItem(item);
   res.json({
