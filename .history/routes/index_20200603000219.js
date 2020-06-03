@@ -21,9 +21,9 @@ router.post('/addItem', upload, async (req, res) => {
 
     req.files.forEach(async (file) => {
       const { path } = file;
+
       const newPath = await uploader(path);
       urls.push(newPath);
-      images.push(newPath.url);
       fs.unlinkSync(path);
     });
   }

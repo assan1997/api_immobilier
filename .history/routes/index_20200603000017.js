@@ -23,7 +23,6 @@ router.post('/addItem', upload, async (req, res) => {
       const { path } = file;
       const newPath = await uploader(path);
       urls.push(newPath);
-      images.push(newPath.url);
       fs.unlinkSync(path);
     });
   }
@@ -31,7 +30,7 @@ router.post('/addItem', upload, async (req, res) => {
   let output = await controller.addNewItem(item);
   res.json({
     message: 'images uploaded successfully',
-    data: urls,
+    data: output,
   });
 });
 router.get('/allItems', async (req, res) => {

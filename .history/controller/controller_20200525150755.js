@@ -102,6 +102,7 @@ class Controller {
       User.findOne({ username: item.author }).then((user) => {
         const extract = extractItem({ data: item, exclude: 'author' });
         extract.user = user;
+        console.log(extract);
         const newItem = new Item(extract);
         newItem.save().then(() => {
           Item.find({ author: user })
