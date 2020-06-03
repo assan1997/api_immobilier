@@ -23,10 +23,11 @@ router.post('/addItem', upload, async (req, res) => {
       const { path } = file;
       const newPath = await uploader(path);
       urls.push(newPath);
-      item.images = [...item.images, newPath.url];
+      images.push(newPath.url);
       fs.unlinkSync(path);
     }
   }
+
   await controller.addNewItem(item);
   res.json({
     message: 'images uploaded successfully',

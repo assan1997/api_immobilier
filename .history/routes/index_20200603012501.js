@@ -27,6 +27,7 @@ router.post('/addItem', upload, async (req, res) => {
       fs.unlinkSync(path);
     }
   }
+
   await controller.addNewItem(item);
   res.json({
     message: 'images uploaded successfully',
