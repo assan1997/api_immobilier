@@ -14,7 +14,7 @@ const homeItemsSchema = new Schema({
   rooms: Number,
   baths: Number,
   garages: Number,
-  images: { type: [] },
+  images: [String],
   user: { type: Schema.Types.ObjectId, ref: 'user' },
 });
 const homeItems = mongoose.model('homeitem', homeItemsSchema);
