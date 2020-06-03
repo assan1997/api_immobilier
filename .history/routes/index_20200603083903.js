@@ -26,7 +26,6 @@ router.post('/addItem', upload, async (req, res) => {
 
       urls.push(newPath);
       images.push(newPath.url);
-      console.log(images);
       fs.unlinkSync(path);
     });
   }
