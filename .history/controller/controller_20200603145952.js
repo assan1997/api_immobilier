@@ -57,11 +57,12 @@ class Controller {
     });
   }
   static getAllItems() {
-    return new Promise(async (resolve, reject) => {
-      let homeItems = await Item.find({ isTerrain: false });
-      let othersItems = await Item.find({ isTerrain: true });
-      let items = { homeItems: homeItems, othersItems: othersItems };
-      resolve(items);
+    return new Promise((resolve, reject) => {
+      Item.find()
+        .populate('user')
+        .then((items) => {
+          resolve(items);
+        });
     });
   }
   static getOneItem(id) {
@@ -97,28 +98,13 @@ class Controller {
     });
   }
   static addNewItem(item) {
-    return new Promise(async (resolve, reject) => {
-      let user = await User.findOne({ username: item.author });
-      let items = await Item.find();
-      if (user !== null) {
+    return new Promise((resolve, reject) => {
+      User.findOne({ username: item.author }).then((user) => {
+        const extract = extractItem({ data: item, exclude: 'author' });
         extract.user = user;
-        if (!item.isTerrain) {
-          let page = 1;
-          const extract = extractItem({ data: item, exclude: 'author' });
-
-          if (items.length <= 10) {
-            extract.page = page;
-          } else {
-            let div = items.length / 10;
-            extract.page = Math.trunc(div);
-          }
-          const newItem = new Item(extract);
-          newItem.save().then(() => {});
-        } else {
-          const newItem = new Item(extract);
-          newItem.save().then(() => {});
-        }
-      }
+        const newItem = new Item(extract);
+        newItem.save().then(() => {});
+      });
     });
   }
   static deletePropertie(propertieId) {

@@ -60,7 +60,6 @@ class Controller {
     return new Promise(async (resolve, reject) => {
       let homeItems = await Item.find({ isTerrain: false });
       let othersItems = await Item.find({ isTerrain: true });
-      let items = { homeItems: homeItems, othersItems: othersItems };
       resolve(items);
     });
   }

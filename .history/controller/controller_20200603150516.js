@@ -57,11 +57,12 @@ class Controller {
     });
   }
   static getAllItems() {
-    return new Promise(async (resolve, reject) => {
-      let homeItems = await Item.find({ isTerrain: false });
-      let othersItems = await Item.find({ isTerrain: true });
-      let items = { homeItems: homeItems, othersItems: othersItems };
-      resolve(items);
+    return new Promise((resolve, reject) => {
+      Item.find()
+        .populate('user')
+        .then((items) => {
+          resolve(items);
+        });
     });
   }
   static getOneItem(id) {
@@ -101,23 +102,11 @@ class Controller {
       let user = await User.findOne({ username: item.author });
       let items = await Item.find();
       if (user !== null) {
-        extract.user = user;
-        if (!item.isTerrain) {
-          let page = 1;
+        if (items.length)
           const extract = extractItem({ data: item, exclude: 'author' });
-
-          if (items.length <= 10) {
-            extract.page = page;
-          } else {
-            let div = items.length / 10;
-            extract.page = Math.trunc(div);
-          }
-          const newItem = new Item(extract);
-          newItem.save().then(() => {});
-        } else {
-          const newItem = new Item(extract);
-          newItem.save().then(() => {});
-        }
+        extract.user = user;
+        const newItem = new Item(extract);
+        newItem.save().then(() => {});
       }
     });
   }
